@@ -9,7 +9,7 @@ def main():
     PORT = 2
     CALL_DELAY = 8
     HANG_UP_DELAY = 2
-    CALLS_FILE = 'calls.txt'
+    CALLS_FILE = 'llamadas.txt'
     
     with open(CALLS_FILE, 'r') as fcalls: 
         calls = fcalls.readlines()
