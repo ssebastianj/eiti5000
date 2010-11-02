@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Author: Sebastian J. Seba
+
+__author__ = "Sebastián J. Seba"
+__email__ = "ssebastianj[at]gmail.com"
+__license__ = "GPL3"
 
 import serial
 from time import sleep
