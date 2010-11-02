@@ -6,29 +6,30 @@ import serial
 from time import sleep
 
 def main():
-    PUERTO = 2
-    ESPERA_LLAMADA = 8
-    ESPERA_COLGAR = 2
+    PORT = 2
+    CALL_DELAY = 8
+    HANG_UP_DELAY = 2
+    CALLS_FILE = 'calls.txt'
     
-    with open('llamadas.txt', 'r') as archivo: 
-        llamadas = archivo.readlines()
+    with open(CALLS_FILE, 'r') as fcalls: 
+        calls = fcalls.readlines()
     
-    if llamadas:
+    if calls:
         try:
-            print u'Conectando a módem en {0}...'.format(serial.device(PUERTO))
-            modem = serial.Serial(PUERTO, timeout=1)
+            print u'Conectando a módem en {0}...'.format(serial.device(PORT))
+            modem = serial.Serial(PORT, timeout=1)
             
-            print obtener_registros(modem)
+            print get_registers(modem)
             
-            for llamada in llamadas:
-                print 'Marcando: {0}'.format(llamada)
-                modem.write('ATD' + llamada.strip() + '\r')
-                sleep(ESPERA_LLAMADA)
+            for call in calls:
+                print 'Marcando: {0}'.format(call)
+                modem.write('ATD' + call.strip() + '\r')
+                sleep(CALL_DELAY)
                 print modem.read(modem.inWaiting())
                     
                 print 'Colgando...'
                 modem.write('ATH\r')
-                sleep(ESPERA_COLGAR)
+                sleep(HANG_UP_DELAY)
                 print modem.read(modem.inWaiting())
 
                 sleep(2)
@@ -39,20 +40,20 @@ def main():
             raw_input()        
         except serial.SerialException:
             print 'Error al conectarse al puerto' \
-                  '{0} ({1})'.format(PUERTO, serial.device(PUERTO))
+                  '{0} ({1})'.format(PORT, serial.device(PORT))
     else:
-        print 'El archivo de llamadas no contiene ninguna llamada.'
+        print 'El fcalls de calls no contiene ninguna call.'
 
-def obtener_registros(modem):
-    registros = {}
-    # Obtener los primeros 10 registros del modem
+def get_registers(modem):
+    registers = {}
+    # Obtener los primeros 10 registers del modem
     for j in xrange(0, 11):
         modem.write('ATS' + str(j) + '?\r')
         sleep(1.5)
         reg = modem.read(modem.inWaiting())
         reg = reg.strip('\r\n').splitlines()
-        registros['S' + str(j)] = reg[2]
-    return registros
+        registers['S' + str(j)] = reg[2]
+    return registers
 
 if __name__ == '__main__':
     main()
