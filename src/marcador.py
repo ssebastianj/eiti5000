@@ -42,7 +42,7 @@ def main():
             print 'Error al conectarse al puerto' \
                   '{0} ({1})'.format(PORT, serial.device(PORT))
     else:
-        print 'El fcalls de calls no contiene ninguna call.'
+        print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def get_registers(modem):
     registers = {}
