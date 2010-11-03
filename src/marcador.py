@@ -19,10 +19,13 @@ def main():
                       dest="redial_delay", default=2)
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number")
-    parser.add_option("-f", "--file", action="store", type="string", 
+    parser.add_option("-f", "--file", action="store", type="string",
                       dest="calls_file")
     (options, args) = parser.parse_args()
 
+    if len(args) == 0:
+        parser.error(u'Número incorrecto de argumentos.')
+    
     with open(options.calls_file, 'r') as fcalls: 
         calls = fcalls.readlines()
     
@@ -51,7 +54,7 @@ def main():
             raw_input()        
         except serial.SerialException:
             print 'Error al conectarse al puerto' \
-                  '{0} ({1})'.format(options.port_number, 
+                  '{0} ({1})'.format(options.port_number,
                                      serial.device(options.port_number))
     else:
         print 'El archivo de llamadas no contiene ninguna llamada.'
