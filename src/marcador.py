@@ -14,7 +14,7 @@ def main():
     parser.set_usage("Usage: %prog [-p PORT_NUMBER] [-c CALL_DELAY]" \
                      " [-u HANGUP_DELAY] [-v REDIAL_DELAY] archivo_llamadas")
     parser.add_option("-p", "--port", action="store", type="int",
-                      dest="port_number", 
+                      dest="port_number",
                       help="Numero de puerto COM a utilizar [Obligatorio]")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
@@ -34,7 +34,7 @@ def main():
         parser.error("Pruebe '" + parser.get_prog_name() + \
                      " --help' para mas informacion.")
     elif options.port_number is None:
-        parser.error('Debe ingresar un numero de puerto COM.')
+        parser.error('Debe proporcionar un numero de puerto COM.')
     else:
         with open(args[0], 'r') as fcalls: 
             calls = fcalls.readlines()
