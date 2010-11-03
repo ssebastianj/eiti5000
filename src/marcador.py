@@ -49,7 +49,6 @@ def main():
 
 def get_registers(modem):
     registers = {}
-    # Obtener los primeros 10 registers del modem
     for j in xrange(0, 11):
         modem.write('ATS' + str(j) + '?\r')
         sleep(1.5)
