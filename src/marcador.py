@@ -5,10 +5,22 @@ __author__ = "Sebastián J. Seba"
 __email__ = "ssebastianj[at]gmail.com"
 __license__ = "GPL3"
 
-import serial
+from optparse import OptionParser
 from time import sleep
+import serial
+import sys
 
 def main():
+    parser = OptionParser()
+    parser.add_option("-f", "--file", action="store", type="string", 
+                      dest="calls_file")
+    parser.add_option("-c", "--call-delay", action="store", type="int",
+                      dest="call_delay", default=30)
+    parser.add_option("-h", "--hangup-delay", action="store", type="int",
+                      dest="hangup_delay", default=2)
+    parser.add_option("-w", "--redial-delay", action="store", type="int",
+                      dest="redial_delay", default=0)
+        
     PORT = 2
     CALL_DELAY = 8
     HANG_UP_DELAY = 2
