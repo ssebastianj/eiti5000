@@ -12,52 +12,59 @@ import serial
 def main():
     parser = OptionParser()
     parser.add_option("-c", "--call-delay", action="store", type="int",
-                      dest="call_delay", default=30)
+                      dest="call_delay", default=30,
+                      help="Tiempo, en segundos, a esperar luego de realizar" \
+                      "una llamada [Default: %default]")
     parser.add_option("-h", "--hangup-delay", action="store", type="int",
-                      dest="hangup_delay", default=2)
+                      dest="hangup_delay", default=2,
+                      help="Tiempo, en segundos, a esperar luego de cortar" \
+                      "una llamada [Default: %default]")
     parser.add_option("-w", "--redial-delay", action="store", type="int",
-                      dest="redial_delay", default=2)
+                      dest="redial_delay", default=2,
+                      help="Tiempo, en segundos, a esperar entre llamadas" \
+                      "[Default: $default]")
     parser.add_option("-p", "--port", action="store", type="int",
-                      dest="port_number")
+                      dest="port_number", 
+                      help="Número de puerto COM a utilizar")
     parser.add_option("-f", "--file", action="store", type="string",
-                      dest="calls_file")
+                      dest="calls_file",
+                      help="Ruta al archivo de llamadas")
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
         parser.error(u'Número incorrecto de argumentos.')
-    
-    with open(options.calls_file, 'r') as fcalls: 
-        calls = fcalls.readlines()
-    
-    if calls:
-        try:
-            print u'Conectando a módem en {0}...'.format(serial.device(
-                                                         options.port_number))
-            modem = serial.Serial(options.port_number, timeout=1)
-            
-            for call in calls:
-                print 'Marcando: {0}'.format(call)
-                modem.write('ATD' + call.strip() + '\r')
-                sleep(options.call_delay)
-                print modem.read(modem.inWaiting())
-                    
-                print 'Colgando...'
-                modem.write('ATH\r')
-                sleep(options.hangup_delay)
-                print modem.read(modem.inWaiting())
-
-                sleep(options.redial_delay)
-                
-            print u'Cerrando conexión...'
-            modem.close()
-            print 'Terminado. Presione ENTER para salir.'
-            raw_input()        
-        except serial.SerialException:
-            print 'Error al conectarse al puerto' \
-                  '{0} ({1})'.format(options.port_number,
-                                     serial.device(options.port_number))
     else:
-        print 'El archivo de llamadas no contiene ninguna llamada.'
+        with open(options.calls_file, 'r') as fcalls: 
+            calls = fcalls.readlines()
+        
+        if calls:
+            try:
+                print u'Conectando a módem en {0}...'.format(serial.device(
+                                                             options.port_number))
+                modem = serial.Serial(options.port_number, timeout=1)
+                
+                for call in calls:
+                    print 'Marcando: {0}'.format(call)
+                    modem.write('ATD' + call.strip() + '\r')
+                    sleep(options.call_delay)
+                    print modem.read(modem.inWaiting())
+                        
+                    print 'Colgando...'
+                    modem.write('ATH\r')
+                    sleep(options.hangup_delay)
+                    print modem.read(modem.inWaiting())
+                    sleep(options.redial_delay)
+                    
+                print u'Cerrando conexión...'
+                modem.close()
+                print 'Terminado. Presione ENTER para salir.'
+                raw_input()        
+            except serial.SerialException:
+                print 'Error al conectarse al puerto' \
+                      '{0} ({1})'.format(options.port_number,
+                                         serial.device(options.port_number))
+        else:
+            print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def get_registers(modem):
     registers = {}
