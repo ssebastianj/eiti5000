@@ -31,7 +31,8 @@ def main():
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
-        parser.error("Pruebe '" + parser.get_prog_name() + " --help' para mas informacion.")
+        parser.error("Pruebe '" + parser.get_prog_name() + \
+                     " --help' para mas informacion.")
     elif options.port_number is None:
         parser.error('Debe ingresar un numero de puerto COM.')
     else:
