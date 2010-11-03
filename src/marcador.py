@@ -16,7 +16,7 @@ def main():
     parser.add_option("-h", "--hangup-delay", action="store", type="int",
                       dest="hangup_delay", default=2)
     parser.add_option("-w", "--redial-delay", action="store", type="int",
-                      dest="redial_delay", default=0)
+                      dest="redial_delay", default=2)
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number")
     parser.add_option("-f", "--file", action="store", type="string", 
@@ -28,23 +28,22 @@ def main():
     
     if calls:
         try:
-            print u'Conectando a módem en {0}...'.format(serial.device(PORT))
-            modem = serial.Serial(PORT, timeout=1)
-            
-            print get_registers(modem)
+            print u'Conectando a módem en {0}...'.format(serial.device(
+                                                         options.port_number))
+            modem = serial.Serial(options.port_number, timeout=1)
             
             for call in calls:
                 print 'Marcando: {0}'.format(call)
                 modem.write('ATD' + call.strip() + '\r')
-                sleep(CALL_DELAY)
+                sleep(options.call_delay)
                 print modem.read(modem.inWaiting())
                     
                 print 'Colgando...'
                 modem.write('ATH\r')
-                sleep(HANG_UP_DELAY)
+                sleep(options.hangup_delay)
                 print modem.read(modem.inWaiting())
 
-                sleep(2)
+                sleep(options.redial_delay)
                 
             print u'Cerrando conexión...'
             modem.close()
@@ -52,7 +51,8 @@ def main():
             raw_input()        
         except serial.SerialException:
             print 'Error al conectarse al puerto' \
-                  '{0} ({1})'.format(PORT, serial.device(PORT))
+                  '{0} ({1})'.format(options.port_number, 
+                                     serial.device(options.port_number))
     else:
         print 'El archivo de llamadas no contiene ninguna llamada.'
 
