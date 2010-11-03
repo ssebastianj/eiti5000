@@ -8,7 +8,6 @@ __license__ = "GPL3"
 from optparse import OptionParser
 from time import sleep
 import serial
-import sys
 
 def main():
     parser = OptionParser()
