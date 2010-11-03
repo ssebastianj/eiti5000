@@ -13,26 +13,27 @@ def main():
     parser = OptionParser()
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
-                      help="Tiempo, en segundos, a esperar luego de realizar" \
+                      help="Tiempo, en segundos, a esperar luego de realizar " \
                       "una llamada [Default: %default]")
-    parser.add_option("-h", "--hangup-delay", action="store", type="int",
+    parser.add_option("-u", "--hangup-delay", action="store", type="int",
                       dest="hangup_delay", default=2,
-                      help="Tiempo, en segundos, a esperar luego de cortar" \
+                      help="Tiempo, en segundos, a esperar luego de cortar " \
                       "una llamada [Default: %default]")
     parser.add_option("-w", "--redial-delay", action="store", type="int",
                       dest="redial_delay", default=2,
                       help="Tiempo, en segundos, a esperar entre llamadas" \
-                      "[Default: $default]")
+                      "[Default: %default]")
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number", 
-                      help="Número de puerto COM a utilizar")
+                      help="Numero de puerto COM a utilizar")
     parser.add_option("-f", "--file", action="store", type="string",
                       dest="calls_file",
                       help="Ruta al archivo de llamadas")
     (options, args) = parser.parse_args()
 
-    if len(args) == 0:
-        parser.error(u'Número incorrecto de argumentos.')
+    if len(args) != 0:
+        print options
+        parser.error('Cantidad incorrecta de argumentos.')
     else:
         with open(options.calls_file, 'r') as fcalls: 
             calls = fcalls.readlines()
@@ -40,8 +41,8 @@ def main():
         if calls:
             try:
                 print u'Conectando a módem en {0}...'.format(serial.device(
-                                                             options.port_number))
-                modem = serial.Serial(options.port_number, timeout=1)
+                                                             options.port_number - 1))
+                modem = serial.Serial(options.port_number - 1, timeout=1)
                 
                 for call in calls:
                     print 'Marcando: {0}'.format(call)
@@ -61,8 +62,8 @@ def main():
                 raw_input()        
             except serial.SerialException:
                 print 'Error al conectarse al puerto' \
-                      '{0} ({1})'.format(options.port_number,
-                                         serial.device(options.port_number))
+                      '{0} ({1})'.format(options.port_number - 1,
+                                         serial.device(options.port_number - 1))
         else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
