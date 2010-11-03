@@ -11,8 +11,8 @@ import serial
 
 def main():
     parser = OptionParser()
-    usg = "Usage: %prog [-p PORT_NUMBER] [-c CALL_DELAY]" + "[-u HANGUP_DELAY] [-v REDIAL_DELAY] archivo_llamadas"
-    parser.set_usage(usg)
+    parser.set_usage("Usage: %prog [-p PORT_NUMBER] [-c CALL_DELAY]" \
+                     " [-u HANGUP_DELAY] [-v REDIAL_DELAY] archivo_llamadas")
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number", 
                       help="Numero de puerto COM a utilizar [Obligatorio]")
