@@ -11,6 +11,7 @@ import serial
 
 def main():
     parser = OptionParser()
+    parser.set_usage("Usage: %prog [options] archivo_llamadas")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
                       help="Tiempo, en segundos, a esperar luego de realizar " \
@@ -25,17 +26,15 @@ def main():
                       "[Default: %default]")
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number", 
-                      help="Numero de puerto COM a utilizar")
-    parser.add_option("-f", "--file", action="store", type="string",
-                      dest="calls_file",
-                      help="Ruta al archivo de llamadas")
+                      help="Numero de puerto COM a utilizar [Obligatorio]")
     (options, args) = parser.parse_args()
 
-    if len(args) != 0:
-        print options
-        parser.error('Cantidad incorrecta de argumentos.')
+    if len(args) == 0:
+        parser.error('Debe ingresar un archivo de llamadas.')
+    elif options.port_number is None:
+        parser.error('Debe ingresar un numero de puerto COM.')
     else:
-        with open(options.calls_file, 'r') as fcalls: 
+        with open(args[0], 'r') as fcalls: 
             calls = fcalls.readlines()
         
         if calls:
