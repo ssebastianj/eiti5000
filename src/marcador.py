@@ -11,21 +11,19 @@ import serial
 
 def main():
     parser = OptionParser()
-    parser.add_option("-f", "--file", action="store", type="string", 
-                      dest="calls_file")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30)
     parser.add_option("-h", "--hangup-delay", action="store", type="int",
                       dest="hangup_delay", default=2)
     parser.add_option("-w", "--redial-delay", action="store", type="int",
                       dest="redial_delay", default=0)
-        
-    PORT = 2
-    CALL_DELAY = 8
-    HANG_UP_DELAY = 2
-    CALLS_FILE = 'llamadas.txt'
-    
-    with open(CALLS_FILE, 'r') as fcalls: 
+    parser.add_option("-p", "--port", action="store", type="int",
+                      dest="port_number")
+    parser.add_option("-f", "--file", action="store", type="string", 
+                      dest="calls_file")
+    (options, args) = parser.parse_args()
+
+    with open(options.calls_file, 'r') as fcalls: 
         calls = fcalls.readlines()
     
     if calls:
