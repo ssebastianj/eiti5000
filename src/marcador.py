@@ -18,15 +18,15 @@ def main():
                       help="Numero de puerto COM a utilizar [Obligatorio]")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
-                      help="Tiempo, en segundos, a esperar luego de realizar " \
+                      help="Tiempo (en segundos) a esperar luego de realizar " \
                       "una llamada [Default: %default]")
     parser.add_option("-u", "--hangup-delay", action="store", type="int",
                       dest="hangup_delay", default=2,
-                      help="Tiempo, en segundos, a esperar luego de cortar " \
+                      help="Tiempo (en segundos) a esperar luego de cortar " \
                       "una llamada [Default: %default]")
     parser.add_option("-w", "--redial-delay", action="store", type="int",
                       dest="redial_delay", default=2,
-                      help="Tiempo, en segundos, a esperar entre llamadas" \
+                      help="Tiempo (en segundos) a esperar entre llamadas" \
                       "[Default: %default]")
     (options, args) = parser.parse_args()
 
