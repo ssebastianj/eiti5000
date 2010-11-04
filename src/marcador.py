@@ -39,6 +39,10 @@ def main():
                       dest="redial_delay", default=2,
                       help="Tiempo (en segundos) a esperar entre llamadas" \
                       "[Default: %default]")
+    parser.add_option("-a", "--autoclose", action="store_true", default=False,
+                      dest="autoclose", help="Cerrar programa al finalizar." \
+                      "Al utilizar esta opcion no sera necesario presionar " \
+                      "la tecla ENTER para salir.")
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
