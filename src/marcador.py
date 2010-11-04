@@ -20,30 +20,7 @@ from time import sleep
 import serial
 
 def main(): 
-    parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER]" \
-                          " [-c CALL_DELAY]\n                 " \
-                          "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n" \
-                          "                   [-a] archivo_llamadas",
-                          version=__version__)
-    parser.add_option("-p", "--port", action="store", type="int",
-                      dest="port_number",
-                      help="Numero de puerto COM a utilizar [Obligatorio]")
-    parser.add_option("-c", "--call-delay", action="store", type="int",
-                      dest="call_delay", default=30,
-                      help="Tiempo (en segundos) a esperar luego de realizar " \
-                      "una llamada [Default: %default]")
-    parser.add_option("-u", "--hangup-delay", action="store", type="int",
-                      dest="hangup_delay", default=2,
-                      help="Tiempo (en segundos) a esperar luego de cortar " \
-                      "una llamada [Default: %default]")
-    parser.add_option("-r", "--redial-delay", action="store", type="int",
-                      dest="redial_delay", default=2,
-                      help="Tiempo (en segundos) a esperar entre llamadas" \
-                      "[Default: %default]")
-    parser.add_option("-a", "--autoclose", action="store_true", default=False,
-                      dest="autoclose", help="Cerrar programa al finalizar. " \
-                      "Al utilizar esta opcion no sera necesario presionar " \
-                      "la tecla ENTER para salir.")
+    parser = _get_arguments()
     (options, args) = parser.parse_args()
 
     if len(args) == 0:
@@ -76,23 +53,55 @@ def main():
                     print modem.read(modem.inWaiting())
                     sleep(options.redial_delay)
                 
-                if not options.autoclose:
-                    print 'Terminado. Presione ENTER para salir.'
-                    raw_input()
             except serial.SerialException:
                 print 'Error al conectarse al puerto {0} ({1})' \
                       .format(options.port_number - 1,
                               serial.device(options.port_number - 1))
             except KeyboardInterrupt:
-                print 'Abortando marcado...'
+                print u'Interrupción de teclado detectada.'
                 exit(0)
             except Exception:
                 pass
             finally:
                 print u'Cerrando conexión con modem...'
                 modem.close()
+                
+            try:
+                if not options.autoclose:
+                    print 'Terminado. Presione ENTER para salir.'
+                    raw_input()
+            except KeyboardInterrupt:
+                pass
         else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
+def _get_arguments():
+    parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER]"
+        " [-c CALL_DELAY]\n                 "
+        "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n"
+        "                   [-a] archivo_llamadas",
+        version=__version__)
+    parser.add_option("-p", "--port", action="store", type="int",
+                      dest="port_number",
+                      help="Numero de puerto COM a utilizar [Obligatorio]")
+    parser.add_option("-c", "--call-delay", action="store", type="int",
+                      dest="call_delay", default=30,
+                      help="Tiempo (en segundos) a esperar luego de realizar "
+                           "una llamada [Default: %default]")
+    parser.add_option("-u", "--hangup-delay", action="store", type="int",
+                      dest="hangup_delay", default=2,
+                      help="Tiempo (en segundos) a esperar luego de cortar "
+                           "una llamada [Default: %default]")
+    parser.add_option("-r", "--redial-delay", action="store", type="int",
+                      dest="redial_delay", default=2,
+                      help="Tiempo (en segundos) a esperar entre llamadas"
+                           "[Default: %default]")
+    parser.add_option("-a", "--autoclose", action="store_true", default=False,
+                      dest="autoclose", help="Cerrar programa al finalizar. "
+                           "Al utilizar esta opcion no sera necesario"
+                           "presionar la tecla ENTER para salir.")
+    return parser
+
 if __name__ == '__main__':
     main()
+    
