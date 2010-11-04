@@ -48,10 +48,10 @@ def main():
 
     if len(args) == 0:
         parser.print_usage()
-        print "Pruebe '{0} --help' para mas informacion." \
+        print u"Pruebe '{0} --help' para más información." \
               .format(parser.get_prog_name())
     elif options.port_number is None:
-        print 'Debe proporcionar un numero de puerto COM.'
+        print u'Debe proporcionar un número de puerto COM.'
     else:
         with open(args[0], 'r') as fcalls: 
             calls = fcalls.readlines()
