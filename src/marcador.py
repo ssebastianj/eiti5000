@@ -9,10 +9,11 @@ from optparse import OptionParser
 from time import sleep
 import serial
 
-def main():
-    parser = OptionParser()
-    parser.set_usage("Usage: %prog [-p PORT_NUMBER] [-c CALL_DELAY]" \
-                     " [-u HANGUP_DELAY] [-v REDIAL_DELAY] archivo_llamadas")
+def main(): 
+    parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER]" \
+                          " [-c CALL_DELAY] [-u HANGUP_DELAY]" \
+                          " [-r REDIAL_DELAY] archivo_llamadas",
+                          version=__version__)
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number",
                       help="Numero de puerto COM a utilizar [Obligatorio]")
@@ -24,7 +25,7 @@ def main():
                       dest="hangup_delay", default=2,
                       help="Tiempo (en segundos) a esperar luego de cortar " \
                       "una llamada [Default: %default]")
-    parser.add_option("-w", "--redial-delay", action="store", type="int",
+    parser.add_option("-r", "--redial-delay", action="store", type="int",
                       dest="redial_delay", default=2,
                       help="Tiempo (en segundos) a esperar entre llamadas" \
                       "[Default: %default]")
