@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__ = "Sebastián J. Seba"
-__version__ = "1.0"
+__version__ = "1.1"
 __license__ = """This program is free software: you can redistribute it and/or
                  modify it under the terms of the GNU General Public License
                  as published by the Free Software Foundation, either version
@@ -58,7 +58,7 @@ def main():
                       .format(options.port_number - 1,
                               serial.device(options.port_number - 1))
             except KeyboardInterrupt:
-                print u'Interrupción de teclado detectada.'
+                print 'Cancelando marcado...'
                 exit(0)
             except Exception:
                 pass
@@ -70,7 +70,7 @@ def main():
                 if not options.autoclose:
                     print 'Terminado. Presione ENTER para salir.'
                     raw_input()
-            except KeyboardInterrupt:
+            except KeyboardInterrupt: 
                 pass
         else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
