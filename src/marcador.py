@@ -75,9 +75,6 @@ def main():
                     sleep(options.hangup_delay)
                     print modem.read(modem.inWaiting())
                     sleep(options.redial_delay)
-                    
-                print u'Cerrando conexión con modem...'
-                modem.close()
                 
                 if not options.autoclose:
                     print 'Terminado. Presione ENTER para salir.'
@@ -91,6 +88,9 @@ def main():
                 exit(0)
             except Exception:
                 pass
+            finally:
+                print u'Cerrando conexión con modem...'
+                modem.close()
         else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
