@@ -48,8 +48,8 @@ def main():
 
     if len(args) == 0:
         parser.print_usage()
-        print "Pruebe '{0} --help' para mas " \
-               "informacion.".format(parser.get_prog_name())
+        print "Pruebe '{0} --help' para mas informacion." \
+              .format(parser.get_prog_name())
     elif options.port_number is None:
         print 'Debe proporcionar un numero de puerto COM.'
     else:
@@ -58,8 +58,8 @@ def main():
         
         if calls:
             try:
-                print u'Conectando a modem en {0}...'.format(serial.device(
-                                                             options.port_number - 1))
+                print u'Conectando a modem en {0}...' \
+                        .format(serial.device(options.port_number - 1))
                 modem = serial.Serial(options.port_number - 1, timeout=1)
                 
                 total = len(calls)
@@ -83,9 +83,9 @@ def main():
                     print 'Terminado. Presione ENTER para salir.'
                     raw_input()
             except serial.SerialException:
-                print 'Error al conectarse al puerto' \
-                      '{0} ({1})'.format(options.port_number - 1,
-                                         serial.device(options.port_number - 1))
+                print 'Error al conectarse al puerto {0} ({1})' \
+                      .format(options.port_number - 1,
+                              serial.device(options.port_number - 1))
             except Exception:
                 pass
         else:
