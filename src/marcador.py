@@ -86,6 +86,9 @@ def main():
                 print 'Error al conectarse al puerto {0} ({1})' \
                       .format(options.port_number - 1,
                               serial.device(options.port_number - 1))
+            except KeyboardInterrupt:
+                print 'Abortando marcado...'
+                exit(0)
             except Exception:
                 pass
         else:
