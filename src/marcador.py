@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__ = "Sebastián J. Seba"
-__email__ = "ssebastianj[at]gmail.com"
+__version__ = "1.0"
 __license__ = "GPL3"
 
 from optparse import OptionParser
@@ -45,8 +45,10 @@ def main():
                                                              options.port_number - 1))
                 modem = serial.Serial(options.port_number - 1, timeout=1)
                 
-                for call in calls:
-                    print 'Marcando: {0}'.format(call)
+                total = len(calls)
+                
+                for i, call in enumerate(calls, 1):
+                    print '{0}/{1}] Marcando: {2}'.format(str(i), total, call)
                     modem.write('ATD' + call.strip() + '\r')
                     sleep(options.call_delay)
                     print modem.read(modem.inWaiting())
