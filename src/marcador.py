@@ -71,7 +71,7 @@ def main():
                     print 'Terminado. Presione ENTER para salir.'
                     raw_input()
             except KeyboardInterrupt: 
-                pass
+                exit(0)
         else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
