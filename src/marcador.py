@@ -68,15 +68,5 @@ def main():
         else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
-def get_registers(modem):
-    registers = {}
-    for j in xrange(0, 11):
-        modem.write('ATS' + str(j) + '?\r')
-        sleep(1.5)
-        reg = modem.read(modem.inWaiting())
-        reg = reg.strip('\r\n').splitlines()
-        registers['S' + str(j)] = reg[2]
-    return registers
-
 if __name__ == '__main__':
     main()
