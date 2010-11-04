@@ -59,6 +59,8 @@ def main():
                               serial.device(options.port_number - 1))
             except KeyboardInterrupt:
                 print 'Cancelando marcado...'
+                modem.write('ATH\r')
+                sleep(options.hangup_delay)
                 exit(0)
             except Exception:
                 pass
