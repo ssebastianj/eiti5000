@@ -98,7 +98,7 @@ def _get_arguments():
                            "[Default: %default]")
     parser.add_option("-a", "--autoclose", action="store_true", default=False,
                       dest="autoclose", help="Cerrar programa al finalizar. "
-                           "Al utilizar esta opcion no sera necesario"
+                           "Al utilizar esta opcion no sera necesario "
                            "presionar la tecla ENTER para salir.")
     return parser
 
