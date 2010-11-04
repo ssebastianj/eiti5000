@@ -48,7 +48,7 @@ def main():
 
     if len(args) == 0:
         parser.print_usage()
-        print "Pruebe '{0} --help' para mas" \
+        print "Pruebe '{0} --help' para mas " \
                "informacion.".format(parser.get_prog_name())
     elif options.port_number is None:
         print 'Debe proporcionar un numero de puerto COM.'
@@ -58,7 +58,7 @@ def main():
         
         if calls:
             try:
-                print u'Conectando a módem en {0}...'.format(serial.device(
+                print u'Conectando a modem en {0}...'.format(serial.device(
                                                              options.port_number - 1))
                 modem = serial.Serial(options.port_number - 1, timeout=1)
                 
@@ -76,10 +76,12 @@ def main():
                     print modem.read(modem.inWaiting())
                     sleep(options.redial_delay)
                     
-                print u'Cerrando conexión...'
+                print u'Cerrando conexión con modem...'
                 modem.close()
-                print 'Terminado. Presione ENTER para salir.'
-                raw_input()        
+                
+                if not options.autoclose:
+                    print 'Terminado. Presione ENTER para salir.'
+                    raw_input()
             except serial.SerialException:
                 print 'Error al conectarse al puerto' \
                       '{0} ({1})'.format(options.port_number - 1,
