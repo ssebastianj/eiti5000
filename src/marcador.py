@@ -43,7 +43,7 @@ def main():
                 
                 for i, call in enumerate(calls, 1):
                     print '{0}/{1}] Marcando: {2}'.format(str(i), total, call)
-                    modem.write('ATD' + call.strip() + '\r')
+                    modem.write('ATD{0}\r'.format(call.strip()))
                     sleep(options.call_delay)
                     print modem.read(modem.inWaiting())
                     
