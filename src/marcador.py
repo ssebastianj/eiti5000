@@ -46,7 +46,7 @@ def main():
                     modem.write('ATD' + call.strip() + '\r')
                     sleep(options.call_delay)
                     print modem.read(modem.inWaiting())
-                        
+                    
                     print 'Colgando...'
                     modem.write('ATH\r')
                     sleep(options.hangup_delay)
@@ -106,4 +106,3 @@ def _get_arguments():
 
 if __name__ == '__main__':
     main()
-    
