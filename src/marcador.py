@@ -27,8 +27,8 @@ def main():
         parser.print_usage()
         print u"Pruebe '{0} --help' para más información." \
               .format(parser.get_prog_name())
-    elif options.port_number is None: print u'Debe proporcionar un número de puerto COM.'
-    elif options.device is None: print 'Debe proporcionar un dispositivo.'
+    elif options.port_number is None or options.device is None:
+        print u'Debe proporcionar un número de puerto COM o un dispositivo'
     else:
         with open(args[0], 'r') as fcalls: calls = fcalls.readlines()
 
