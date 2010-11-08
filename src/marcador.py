@@ -79,7 +79,7 @@ def main():
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def _get_arguments():
-    parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER]"
+    parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER | -d DEVICE]"
         " [-c CALL_DELAY]\n                 "
         "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n"
         "                   [-a] archivo_llamadas",
