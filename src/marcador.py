@@ -27,11 +27,10 @@ def main():
         parser.print_usage()
         print u"Pruebe '{0} --help' para más información." \
               .format(parser.get_prog_name())
-    elif options.port_number is None:
-        print u'Debe proporcionar un número de puerto COM.'
+    elif options.port_number is None: print u'Debe proporcionar un número de puerto COM.'
+    elif options.device is None: print 'Debe proporcionar un dispositivo.'
     else:
-        with open(args[0], 'r') as fcalls: 
-            calls = fcalls.readlines()
+        with open(args[0], 'r') as fcalls: calls = fcalls.readlines()
 
         modem = None
         total = len(calls)
@@ -62,8 +61,7 @@ def main():
                 modem.write('ATH\r')
                 sleep(options.hangup_delay)
                 exit(0)
-            except Exception:
-                pass
+            except Exception: pass
             finally:
                 print u'Cerrando conexión con modem...'
                 if modem is not None and modem.isOpen(): 
@@ -73,10 +71,8 @@ def main():
                 if not options.autoclose:
                     print 'Terminado. Presione ENTER para salir.'
                     raw_input()
-            except KeyboardInterrupt: 
-                exit(0)
-        else:
-            print 'El archivo de llamadas no contiene ninguna llamada.'
+            except KeyboardInterrupt: exit(0)
+        else: print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def _get_arguments():
     parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER | -d DEVICE]"
