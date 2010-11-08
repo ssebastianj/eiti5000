@@ -52,7 +52,6 @@ def main():
                     sleep(options.hangup_delay)
                     print modem.read(modem.inWaiting())
                     sleep(options.redial_delay)
-                
             except serial.SerialException:
                 print 'Error al conectarse al puerto {0} ({1})' \
                       .format(options.port_number - 1,
