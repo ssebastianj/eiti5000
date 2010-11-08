@@ -87,6 +87,10 @@ def _get_arguments():
     parser.add_option("-p", "--port", action="store", type="int",
                       dest="port_number",
                       help="Numero de puerto COM a utilizar [Obligatorio]")
+    parser.add_option("-d", "--device", action="store", type="string",
+                      dest="device",
+                      help="Dispositivo a utilizar (Utilizar esta opcion " \
+                      "o --port pero NO ambas simultaneamente)[Obligatorio]")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
                       help="Tiempo (en segundos) a esperar luego de realizar "
