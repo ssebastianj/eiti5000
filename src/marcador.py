@@ -35,13 +35,12 @@ def main():
 
         modem = None
         total = len(calls)
-        port = options.port_number - 1
         
         if calls:
             try:
                 print u'Conectando a modem en {0}...' \
-                        .format(serial.device(port))
-                modem = serial.Serial(port, timeout=1)
+                        .format(serial.device(options.device))
+                modem = serial.Serial(options.device, timeout=1)
                 
                 for i, call in enumerate(calls, 1):
                     print '{0}/{1}] Marcando: {2}'.format(str(i), total, call)
@@ -56,7 +55,7 @@ def main():
                     sleep(options.redial_delay)
             except serial.SerialException:
                 print 'Error al conectarse al puerto {0} ({1})' \
-                      .format(port, serial.device(port))
+                      .format(options.device, serial.device(options.device))
             except KeyboardInterrupt:
                 print 'Cancelando marcado...'
                 modem.write('ATH\r')
