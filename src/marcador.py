@@ -30,7 +30,8 @@ def main():
     elif options.port_number is None or options.device is None:
         print u'Debe proporcionar un número de puerto COM o un dispositivo'
     else:
-        with open(args[0], 'r') as fcalls: calls = fcalls.readlines()
+        with open(args[0], 'r') as fcalls: 
+            calls = fcalls.readlines()
 
         modem = None
         total = len(calls)
@@ -61,7 +62,6 @@ def main():
                 modem.write('ATH\r')
                 sleep(options.hangup_delay)
                 exit(0)
-            except Exception: pass
             finally:
                 print u'Cerrando conexión con modem...'
                 if modem is not None and modem.isOpen(): 
@@ -72,21 +72,20 @@ def main():
                     print 'Terminado. Presione ENTER para salir.'
                     raw_input()
             except KeyboardInterrupt: exit(0)
-        else: print 'El archivo de llamadas no contiene ninguna llamada.'
+        else: 
+            print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def _get_arguments():
-    parser = OptionParser(usage="Usage: %prog [-p PORT_NUMBER | -d DEVICE]"
+    parser = OptionParser(usage="Usage: %prog [-d DEVICE]"
         " [-c CALL_DELAY]\n                 "
         "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n"
         "                   [-a] archivo_llamadas",
         version=__version__)
-    parser.add_option("-p", "--port", action="store", type="int",
-                      dest="port_number",
-                      help="Numero de puerto COM a utilizar [Obligatorio]")
     parser.add_option("-d", "--device", action="store", type="string",
                       dest="device",
-                      help="Dispositivo a utilizar (Utilizar esta opcion " \
-                      "o --port pero NO ambas simultaneamente)[Obligatorio]")
+                      help="Dispositivo a utilizar. Puede ser de la forma " \
+                      "COMx o /dev/ttySx o cualquier otra cadena que " \
+                      "represente un dispositivo [Obligatorio]")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
                       help="Tiempo (en segundos) a esperar luego de realizar "
