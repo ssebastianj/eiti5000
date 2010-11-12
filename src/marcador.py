@@ -35,8 +35,7 @@ def main():
             calls = fcalls.readlines()
             
         modem = None
-        calls_ok = []
-        
+        remaining_calls = calls
         if calls:
             try:
                 print u'Conectando a modem en {0}...'.format(options.device)
@@ -49,7 +48,7 @@ def main():
                     sleep(options.call_delay)
                     data = modem.read(modem.inWaiting())
                     if data.find('OK\r\n') != -1:
-                        calls_ok.append(call)
+                        remaining_calls.remove(call)
                     print data
                     
                     print 'Colgando...'
@@ -66,6 +65,9 @@ def main():
                 sleep(options.hangup_delay)
                 exit(0)
             finally:
+                if options.delete_calls:
+                    print 'Actualizando archivo de llamadas...'
+                    _update_calls_file(filename, remaining_calls)
                 print u'Cerrando conexión con modem...'
                 if modem is not None and modem.isOpen(): 
                     modem.close()
@@ -79,9 +81,9 @@ def main():
         else: 
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
-def update_calls_file(filename, calls):
+def _update_calls_file(filename, remaining_calls):
     with open(filename, 'w') as fcalls:
-        fcalls.writelines(calls)
+        fcalls.writelines(remaining_calls)
 
 def _get_arguments():
     parser = OptionParser(usage="Usage: %prog [-d DEVICE]"
@@ -110,8 +112,8 @@ def _get_arguments():
                       dest="autoclose", help="Cerrar programa al finalizar. "
                            "Al utilizar esta opcion no sera necesario "
                            "presionar la tecla ENTER para salir.")
-    parser.add_option("-n", "--no-delete-calls", action="store_true", 
-                      default=False, dest="no_del_calls", 
+    parser.add_option("-n", "--no-delete-calls", action="store_false", 
+                      default=True, dest="delete_calls", 
                       help="Utilice esta opcion si no desea que las " \
                       "llamadas realizadas sean eliminadas.")
     return parser
