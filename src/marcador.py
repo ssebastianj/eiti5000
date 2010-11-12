@@ -66,7 +66,6 @@ def main():
                 exit(0)
             finally:
                 if options.delete_calls:
-                    print 'Actualizando archivo de llamadas...'
                     _update_calls_file(filename, remaining_calls)
                 print u'Cerrando conexión con modem...'
                 if modem is not None and modem.isOpen(): 
@@ -82,6 +81,7 @@ def main():
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def _update_calls_file(filename, remaining_calls):
+    print 'Actualizando archivo de llamadas...'
     with open(filename, 'w') as fcalls:
         fcalls.writelines(remaining_calls)
 
