@@ -33,7 +33,7 @@ def main():
         filename = args[0]
         with open(filename, 'r') as fcalls: 
             calls = fcalls.readlines()
-
+            
         modem = None
         total = len(calls)
         
@@ -75,6 +75,10 @@ def main():
                 exit(0)
         else: 
             print 'El archivo de llamadas no contiene ninguna llamada.'
+
+def update_calls_file(filename, calls):
+    with open(filename, 'w') as fcalls:
+        fcalls.writelines(calls)
 
 def _get_arguments():
     parser = OptionParser(usage="Usage: %prog [-d DEVICE]"
