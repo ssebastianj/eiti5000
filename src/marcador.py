@@ -35,6 +35,7 @@ def main():
             calls = fcalls.readlines()
             
         modem = None
+        calls_ok = []
         total = len(calls)
         
         if calls:
@@ -110,8 +111,7 @@ def _get_arguments():
     parser.add_option("-n", "--no-delete-calls", action="store_true", 
                       default=False, dest="no_del_calls", 
                       help="Utilice esta opcion si no desea que las " \
-                      "llamadas dentro del archivo de llamadas se vayan " \
-                      "eliminando a medida que se las realiza.")
+                      "llamadas realizadas sean eliminadas.")
     return parser
 
 if __name__ == '__main__':
