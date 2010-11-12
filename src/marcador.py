@@ -112,8 +112,8 @@ def _get_arguments():
                       dest="autoclose", help="Cerrar programa al finalizar. "
                            "Al utilizar esta opcion no sera necesario "
                            "presionar la tecla ENTER para salir.")
-    parser.add_option("-n", "--no-delete-calls", action="store_false", 
-                      default=True, dest="delete_calls", 
+    parser.add_option("-n", "--no-delete-calls", action="store_false",
+                      default=True, dest="delete_calls",
                       help="Utilice esta opcion si no desea que las " \
                       "llamadas realizadas sean eliminadas.")
     return parser
