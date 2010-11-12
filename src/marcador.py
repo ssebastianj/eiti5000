@@ -36,18 +36,21 @@ def main():
             
         modem = None
         calls_ok = []
-        total = len(calls)
         
         if calls:
             try:
                 print u'Conectando a modem en {0}...'.format(options.device)
                 modem = serial.Serial(options.device, timeout=1)
                         
+                total = len(calls)
                 for i, call in enumerate(calls, 1):
                     print '{0}/{1}] Marcando: {2}'.format(str(i), total, call)
                     modem.write('ATD{0}\r'.format(call.strip()))
                     sleep(options.call_delay)
-                    print modem.read(modem.inWaiting())
+                    data = modem.read(modem.inWaiting())
+                    if data.find('OK\r\n') != -1:
+                        calls_ok.append(call)
+                    print data
                     
                     print 'Colgando...'
                     modem.write('ATH\r')
