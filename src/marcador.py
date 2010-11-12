@@ -30,7 +30,8 @@ def main():
     elif options.device is None:
         print u'Debe proporcionar un dispositivo.'
     else:
-        with open(args[0], 'r') as fcalls: 
+        filename = args[0]
+        with open(filename, 'r') as fcalls: 
             calls = fcalls.readlines()
 
         modem = None
@@ -102,6 +103,11 @@ def _get_arguments():
                       dest="autoclose", help="Cerrar programa al finalizar. "
                            "Al utilizar esta opcion no sera necesario "
                            "presionar la tecla ENTER para salir.")
+    parser.add_option("-n", "--no-delete-calls", action="store_true", 
+                      default=False, dest="no_del_calls", 
+                      help="Utilice esta opcion si no desea que las " \
+                      "llamadas dentro del archivo de llamadas se vayan " \
+                      "eliminando a medida que se las realiza.")
     return parser
 
 if __name__ == '__main__':
