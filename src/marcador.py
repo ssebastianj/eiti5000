@@ -81,11 +81,15 @@ def main():
             print 'El archivo de llamadas no contiene ninguna llamada.'
 
 def _update_calls_file(filename, remaining_calls):
+    """"Actualiza el archivo de llamadas eliminando las llamadas realizadas."""
     print 'Actualizando archivo de llamadas...'
     with open(filename, 'w') as fcalls:
         fcalls.writelines(remaining_calls)
 
 def _get_arguments():
+    u"""Muestra los argumentos admitidos en la línea de comandos.
+    
+    Devuelve un objeto Parser con los argumentos recibidos."""
     parser = OptionParser(usage="Usage: %prog [-d DEVICE]"
         " [-c CALL_DELAY]\n                 "
         "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n"
