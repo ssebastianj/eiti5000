@@ -87,7 +87,7 @@ def _update_calls_file(filename, remaining_calls):
         fcalls.writelines(remaining_calls)
 
 def _get_arguments():
-    u"""Muestra los argumentos admitidos en la línea de comandos.
+    """Muestra los argumentos admitidos en la linea de comandos.
     
     Devuelve un objeto Parser con los argumentos recibidos."""
     parser = OptionParser(usage="Usage: %prog [-d DEVICE]"
