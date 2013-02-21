@@ -10,4 +10,4 @@ Features
 Dependencies
 ------------
 * [Python](http://www.python.org) >= 2.7 (Python3 not supported)
-* [pySerial](http://pyserial.sourceforge.net/) >= v2.5 (needed for Serial module)
+* [pySerial](http://pyserial.sourceforge.net/) >= v2.5
