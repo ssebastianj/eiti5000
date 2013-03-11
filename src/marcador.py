@@ -18,7 +18,8 @@ from optparse import OptionParser
 from time import sleep
 import serial
 
-def main(): 
+
+def main():
     parser = _get_arguments()
     (options, args) = parser.parse_args()
 
@@ -30,16 +31,16 @@ def main():
         print u'Debe proporcionar un dispositivo.'
     else:
         filename = args[0]
-        with open(filename, 'r') as fcalls: 
+        with open(filename, 'r') as fcalls:
             calls = fcalls.readlines()
-            
+
         modem = None
         remaining_calls = calls
         if calls:
             try:
                 print u'Conectando a modem en {0}...'.format(options.device)
                 modem = serial.Serial(options.device, timeout=1)
-                        
+
                 total = len(calls)
                 for i, call in enumerate(calls, 1):
                     print '{0}/{1}] Marcando: {2}'.format(str(i), total, call)
@@ -49,7 +50,7 @@ def main():
                     if data.find('OK\r\n') != -1:
                         remaining_calls.remove(call)
                     print data
-                    
+
                     print 'Colgando...'
                     modem.write('ATH\r')
                     sleep(options.hangup_delay)
@@ -67,17 +68,18 @@ def main():
                 if options.delete_calls:
                     _update_calls_file(filename, remaining_calls)
                 print u'Cerrando conexión con modem...'
-                if modem is not None and modem.isOpen(): 
+                if modem is not None and modem.isOpen():
                     modem.close()
-                
+
             try:
                 if not options.autoclose:
                     print 'Terminado. Presione ENTER para salir.'
                     raw_input()
-            except KeyboardInterrupt: 
+            except KeyboardInterrupt:
                 exit(0)
-        else: 
+        else:
             print 'El archivo de llamadas no contiene ninguna llamada.'
+
 
 def _update_calls_file(filename, remaining_calls):
     """"Actualiza el archivo de llamadas eliminando las llamadas realizadas."""
@@ -85,19 +87,20 @@ def _update_calls_file(filename, remaining_calls):
     with open(filename, 'w') as fcalls:
         fcalls.writelines(remaining_calls)
 
+
 def _get_arguments():
     """Muestra los argumentos admitidos en la linea de comandos.
-    
+
     Devuelve un objeto Parser con los argumentos recibidos."""
     parser = OptionParser(usage="Usage: %prog [-d DEVICE]"
-        " [-c CALL_DELAY]\n                 "
-        "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n"
-        "                   [-a] archivo_llamadas",
-        version=__version__)
+                          " [-c CALL_DELAY]\n                 "
+                          "  [-u HANGUP_DELAY] [-r REDIAL_DELAY]\n"
+                          "                   [-a] archivo_llamadas",
+                          version=__version__)
     parser.add_option("-d", "--device", action="store", type="string",
                       dest="device",
-                      help="Dispositivo a utilizar. Puede ser de la forma " \
-                      "COMx o /dev/ttySx o cualquier otra cadena que " \
+                      help="Dispositivo a utilizar. Puede ser de la forma "
+                      "COMx o /dev/ttySx o cualquier otra cadena que "
                       "represente un dispositivo [Obligatorio]")
     parser.add_option("-c", "--call-delay", action="store", type="int",
                       dest="call_delay", default=30,
@@ -117,7 +120,7 @@ def _get_arguments():
                            "presionar la tecla ENTER para salir.")
     parser.add_option("-n", "--no-delete-calls", action="store_false",
                       default=True, dest="delete_calls",
-                      help="Utilice esta opcion si no desea que las " \
+                      help="Utilice esta opcion si no desea que las "
                       "llamadas realizadas sean eliminadas.")
     return parser
 
